@@ -24,11 +24,11 @@ shared_examples 'a bikes report approach' do
     let(:expected) do
       [
         {
-          name: cheap_bike.name, type: cheap_bike.model,
+          name: cheap_bike.name, model: cheap_bike.model,
           times_rented: 2, revenue: cheap_bike.price * interval * 2
         },
         {
-          name: expensive_bike.name, type: expensive_bike.model,
+          name: expensive_bike.name, model: expensive_bike.model,
           times_rented: 1, revenue: expensive_bike.price * interval
         }
       ]

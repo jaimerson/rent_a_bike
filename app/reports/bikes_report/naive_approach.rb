@@ -4,7 +4,7 @@ class BikesReport::NaiveApproach
       rental = rentals.first
       result << {
         name: rental.bike.name,
-        type: rental.bike.model,
+        model: rental.bike.model,
         times_rented: rentals.count,
         revenue: rental.bike.price * total_interval(rentals)
       }
