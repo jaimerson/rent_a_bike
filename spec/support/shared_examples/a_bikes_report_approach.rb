@@ -35,6 +35,7 @@ shared_examples 'a bikes report approach' do
     end
 
     it 'presents the right information' do
+      BikesReport.refresh
       expect(approach.to_a).to eq(expected)
     end
   end

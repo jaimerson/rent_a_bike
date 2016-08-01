@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160801140518) do
+ActiveRecord::Schema.define(version: 20160801212641) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,4 +44,16 @@ ActiveRecord::Schema.define(version: 20160801140518) do
 
   add_foreign_key "rentals", "bikes"
   add_foreign_key "rentals", "users"
+
+  create_view :bikes_reports, materialized: true,  sql_definition: <<-SQL
+      SELECT bikes.name,
+      bikes.model,
+      count(rentals.id) AS times_rented,
+      round((sum(((date_part('epoch'::text, (rentals.returned_at - rentals.created_at)) / (3600)::double precision) * (bikes.price)::double precision)))::numeric, 2) AS revenue
+     FROM (rentals
+       JOIN bikes ON ((bikes.id = rentals.bike_id)))
+    GROUP BY bikes.id
+    ORDER BY count(rentals.id) DESC;
+  SQL
+
 end
